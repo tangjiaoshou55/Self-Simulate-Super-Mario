@@ -19,6 +19,8 @@ key-down -> to change selection on main menu
 
 key-enter	-> to enter the game on main menu
 
+key-q -> to shoot fire ball (if you eat the fire flower)
+
 ## Preview
 
 https://user-images.githubusercontent.com/65632867/220802699-dc8ba28b-9a40-4445-b78d-dc3e8f53a1d4.mp4
