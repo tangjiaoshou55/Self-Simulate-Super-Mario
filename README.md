@@ -1,4 +1,4 @@
-# Self-Simulate-Super-Mario-
+# Self Simulate Super Mario
 This is the game I imitated the first level of the original Super Mario game
 
 ## Game operation method
