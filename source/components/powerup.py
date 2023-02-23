@@ -1,11 +1,17 @@
 import pygame
+import random
 from .. import setup, tools
 from .. import constants as C
 
 def create_powerup(centerx, centery, type):
-    """create powerup based on type and Mario state"""
-    return FireFlower(centerx, centery)
+    """use random to choose which item will get, Mushroom or Fire Flower"""
+    randomState = random.choice([True, False])
 
+    """create powerup based on type and Mario state"""
+    if (randomState == True):
+        return Mushroom(centerx, centery)
+    else:
+        return FireFlower(centerx, centery)
 
 class Powerup(pygame.sprite.Sprite):
     def __init__(self, centerx, centery, frame_rects):
@@ -128,7 +134,16 @@ class Fireball(Powerup):
                 self.frame_index += 1
                 self.frame_index %= 4
                 self.timer = self.current_time
+                self.timer = self.frames[self.frame_index]
             self.update_position(level)
+        elif self.state == 'boom':
+            if self.current_time - self.timer > 50:
+                if self.frame_index <  6:
+                    self.frame_index += 1
+                    self.timer = self.current_time
+                    self.image = self.frames[self.frame_index]
+                else:
+                    self.kill()
 
     def update_position(self, level):
         self.rect.x += self.x_vel
@@ -142,13 +157,8 @@ class Fireball(Powerup):
     def check_x_collisions(self, level):
         sprite = pygame.sprite.spritecollideany(self, level.ground_items_group)
         if sprite:
-            if self.direction: # to the right
-                self.direction = 0
-                self.rect.right = sprite.rect.left
-            else:
-                self.direction = 1
-                self.rect.left = sprite.rect.right
-            self.x_vel *= -1
+            self.frames_index = 4
+            self.state = 'boom'
 
     def check_y_collisions(self, level):
         check_group = pygame.sprite.Group(level.ground_items_group, level.box_group, level.brick_group)
@@ -157,7 +167,3 @@ class Fireball(Powerup):
             if self.rect.top < sprite.rect.top:
                 self.rect.bottom = sprite.rect.top
                 self.y_vel = -10
-
-
-class LifeMushroom(Powerup):
-    pass

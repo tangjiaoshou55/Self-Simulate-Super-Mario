@@ -189,6 +189,9 @@ class Level:
             if powerup.name == 'fireflower':
                 self.player.state = 'big2fire'
                 powerup.kill()
+            if powerup.name == "mushroom":
+                self.player.state = 'small2big'
+                powerup.kill()
 
     def check_y_collisions(self):
 
